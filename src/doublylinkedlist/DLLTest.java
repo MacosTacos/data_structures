@@ -12,6 +12,7 @@ public class DLLTest {
         minions.add(secondMinion);
         minions.add(thirdMinion);
         minions.add(fourthMinion);
+        
 
         printList(minions, 4);
 
