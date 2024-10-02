@@ -1,6 +1,8 @@
 package doublylinkedlist;
 
-public class Minion {
+import java.util.Comparator;
+
+public class Minion implements Comparable<Minion> {
     private int level;
     private String name;
     private int eyesCount;
@@ -43,4 +45,13 @@ public class Minion {
                 ", eyesCount=" + eyesCount +
                 '}';
     }
+
+    @Override
+    public int compareTo(Minion other) {
+        return Comparator.comparingInt(Minion::getLevel)
+                .thenComparingInt(Minion::getEyesCount)
+                .thenComparing(Minion::getName)
+                .compare(this, other);
+    }
+
 }
