@@ -6,7 +6,9 @@ public class Minion implements Comparable<Minion> {
     private int level;
     private String name;
     private int eyesCount;
-
+// level + eyesCount по возрастанию
+    //string по убыванию
+    //eyeCount - level по убыванию
     public Minion(int level, String name, int eyesCount) {
         this.level = level;
         this.name = name;
@@ -53,5 +55,4 @@ public class Minion implements Comparable<Minion> {
                 .thenComparing(Minion::getName)
                 .compare(this, other);
     }
-
 }

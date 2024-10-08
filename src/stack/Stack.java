@@ -2,11 +2,14 @@ package stack;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
 public class Stack<T> implements Iterable<T> {
     private Object[] elements;
     private int size;
     private int capacity = 10;
+
+    public int getSize() {
+        return size;
+    }
 
     public Stack() {
         elements = new Object[capacity];

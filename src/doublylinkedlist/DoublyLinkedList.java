@@ -1,12 +1,15 @@
 package doublylinkedlist;
 
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 class DoublyLinkedList<T> implements Iterable<T> {
     private Node<T> head;
     private Node<T> tail;
+    private int size;
 
+    public int getSize() {
+        return size;
+    }
 
     public DoublyLinkedList() {
         this.head = null;
@@ -22,6 +25,7 @@ class DoublyLinkedList<T> implements Iterable<T> {
             node.prev = tail;
             tail = node;
         }
+        size++;
     }
 
     public void addToHead(T data) {
@@ -33,6 +37,7 @@ class DoublyLinkedList<T> implements Iterable<T> {
             node.next = head;
             head = node;
         }
+        size++;
     }
 
     public void removeHead() {
@@ -40,6 +45,7 @@ class DoublyLinkedList<T> implements Iterable<T> {
         if(head != null) {
             head.prev = null;
         }
+        size--;
     }
 
     public void removeTail() {
@@ -47,6 +53,7 @@ class DoublyLinkedList<T> implements Iterable<T> {
         if (tail != null) {
             tail.next = null;
         }
+        size--;
     }
 
     public void update(T object, T data) {
@@ -58,9 +65,17 @@ class DoublyLinkedList<T> implements Iterable<T> {
     }
 
     public T get(int index) {
-        Node<T> node = head;
-        for (int i = 0; i < index; i++) {
-            node = node.next;
+        Node<T> node;
+        if (index < size / 2) {
+            node = head;
+            for (int i = 0; i < index; i++) {
+                node = node.next;
+            }
+        } else {
+            node = tail;
+            for (int i = index - 1; i > 0; i--) {
+                node = node.prev;
+            }
         }
         return node.data;
     }

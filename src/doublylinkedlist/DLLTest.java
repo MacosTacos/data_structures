@@ -50,6 +50,7 @@ public class DLLTest {
         for (Minion minion : minionList) {
             System.out.println(minion);
         }
+        System.out.println("Последний элемент: " + minions.get(2));
     }
 
     static void printList(DoublyLinkedList<Minion> minions) {
