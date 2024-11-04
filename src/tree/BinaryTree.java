@@ -1,13 +1,15 @@
 package tree;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.function.Consumer;
 
 public class BinaryTree<E> implements AbstractBinaryTree<E> {
     private E key;
-    private BinaryTree<E> left;
-    private BinaryTree<E> right;
+    private AbstractBinaryTree<E> left;
+    private AbstractBinaryTree<E> right;
 
     public BinaryTree(E key) {
         this.key = key;
@@ -33,11 +35,13 @@ public class BinaryTree<E> implements AbstractBinaryTree<E> {
         this.key = key;
     }
 
-    public void setLeft(BinaryTree<E> left) {
+    @Override
+    public void setLeft(AbstractBinaryTree<E> left) {
         this.left = left;
     }
 
-    public void setRight(BinaryTree<E> right) {
+    @Override
+    public void setRight(AbstractBinaryTree<E> right) {
         this.right = right;
     }
 
@@ -104,5 +108,28 @@ public class BinaryTree<E> implements AbstractBinaryTree<E> {
         if (right != null) {
             right.forEachInOrder(consumer);
         }
+    }
+
+    @Override
+    public List<AbstractBinaryTree<E>> formatBFS() {
+        List<AbstractBinaryTree<E>> result = new ArrayList<>();
+        Queue<AbstractBinaryTree<E>> queue = new LinkedList<>();
+
+        queue.add(this); // Начинаем с корня
+
+        while (!queue.isEmpty()) {
+            AbstractBinaryTree<E> current = queue.poll();
+            result.add(current);
+
+            if (current.getLeft() != null) {
+                queue.add(current.getLeft());
+            }
+
+            if (current.getRight() != null) {
+                queue.add(current.getRight());
+            }
+        }
+
+        return result;
     }
 }
