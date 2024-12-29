@@ -2,33 +2,40 @@ package fourth_work;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class MaxHeap<E extends Comparable<E>> implements Heap<E> {
     private E[] heap;
     private int size;
     private Map<E, Integer> indexMap;
+    private Map<E, Integer> indexMapDefault;
 
     @SuppressWarnings("unchecked")
     public MaxHeap(int capacity) {
         heap = (E[]) new Comparable[capacity];
         size = 0;
         indexMap = new HashMap<>();
+        indexMapDefault = new TreeMap<>();
     }
 
+    @Override
     public int size() {
         return size;
     }
 
+    @Override
     public void add(E element) {
         if (size == heap.length) {
             grow();
         }
         heap[size] = element;
         indexMap.put(element, size);
+        indexMapDefault.put(element, size);
         heapifyUp(size);
         size++;
     }
 
+    @Override
     public E peek() {
         if (size == 0) {
             return null;
@@ -54,8 +61,13 @@ public class MaxHeap<E extends Comparable<E>> implements Heap<E> {
         return removedValue;
     }
 
-    public boolean contains(E element) {
+    @Override
+    public boolean containsHashMap(E element) {
         return indexMap.containsKey(element);
+    }
+    @Override
+    public boolean contains(E element) {
+        return indexMapDefault.containsKey(element);
     }
 
     private void heapifyUp(int index) {
@@ -91,6 +103,9 @@ public class MaxHeap<E extends Comparable<E>> implements Heap<E> {
 
         indexMap.put(heap[i], i);
         indexMap.put(heap[j], j);
+
+        indexMapDefault.put(heap[i], i);
+        indexMapDefault.put(heap[j], j);
     }
 
     @SuppressWarnings("unchecked")

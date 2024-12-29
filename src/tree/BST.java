@@ -1,5 +1,7 @@
 package tree;
 
+import java.util.*;
+
 public class BST<E extends Comparable<E>> implements AbstractBinarySearchTree<E> {
     private Node<E> root;
 
@@ -68,6 +70,63 @@ public class BST<E extends Comparable<E>> implements AbstractBinarySearchTree<E>
             return searchRec(node.rightChild, element);
         }
     }
+
+    @Override
+    public void printTree() {
+        if (this.root == null) {
+            System.out.println("(empty tree)");
+            return;
+        }
+
+        List<List<String>> levels = new ArrayList<>();
+        Queue<Node<E>> queue = new LinkedList<>();
+        queue.add(this.root);
+
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            List<String> currentLevel = new ArrayList<>();
+            for (int i = 0; i < size; i++) {
+                Node<E> current = queue.poll();
+                if (current != null) {
+                    currentLevel.add(current.value.toString());
+                    queue.add(current.leftChild);
+                    queue.add(current.rightChild);
+                } else {
+                    currentLevel.add(null);
+                    queue.add(null);
+                    queue.add(null);
+                }
+            }
+
+            boolean allNulls = currentLevel.stream().allMatch(Objects::isNull);
+            if (allNulls) break;
+
+            levels.add(currentLevel);
+        }
+
+
+        int maxWidth = levels.get(levels.size() - 1).size();
+        for (int i = 0; i < levels.size(); i++) {
+            List<String> level = levels.get(i);
+            int spacing = (int) Math.pow(2, levels.size() - i - 1);
+            StringBuilder sb = new StringBuilder();
+
+            for (int j = 0; j < level.size(); j++) {
+                String nodeValue = level.get(j) == null ? "  " : level.get(j);
+                int padding = spacing - 1;
+                sb.append("  ".repeat(padding)).append(nodeValue).append("  ".repeat(padding + 1));
+            }
+
+            System.out.println(sb);
+        }
+    }
+
+
+    private int getWidth(int height) {
+        return (int) Math.pow(2, height) - 1;
+    }
+
+
 
     @Override
     public Node<E> getRoot() {

@@ -16,6 +16,7 @@ public interface AbstractBinarySearchTree<E extends Comparable<E>> {
             this.rightChild = rightChild;
         }
     }
+    public void printTree();
 
     void insert(E element);
 
